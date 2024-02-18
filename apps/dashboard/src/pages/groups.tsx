@@ -67,7 +67,7 @@ export default function GroupsPage(): JSX.Element {
             <VStack spacing="9" flex="1">
                 <HStack justifyContent="space-between" width="100%">
                     <Heading fontSize="40px" as="h1">
-                        My groups
+                        Zensor Network
                     </Heading>
                 </HStack>
 
@@ -108,7 +108,7 @@ export default function GroupsPage(): JSX.Element {
                         colorScheme="primary"
                         onClick={() => navigate("/groups/new")}
                     >
-                        Add group
+                        Add Sensor Network
                     </Button>
                 </HStack>
 
@@ -120,7 +120,7 @@ export default function GroupsPage(): JSX.Element {
 
                 {!_isLoading && _groups.length === 0 && (
                     <Text fontSize="2xl" fontWeight="bold" pt="100px">
-                        You have not created any groups
+                        You have not created any sensor networks yet
                     </Text>
                 )}
 

@@ -28,7 +28,7 @@ export default function GroupSizeStep({
 }: GroupSizeStepProps): JSX.Element {
     return (
         <>
-            <Text>How big is your group?</Text>
+            <Text>How big is your network?</Text>
 
             <HStack w="764px" py="16px" overflowX="scroll">
                 {groupSizes.map((groupSize) => (

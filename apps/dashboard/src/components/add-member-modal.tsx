@@ -1,30 +1,22 @@
 import { getSemaphoreContract } from "@bandada/utils"
 import {
-    AbsoluteCenter,
     Box,
     Button,
-    Divider,
     Heading,
-    Icon,
-    IconButton,
-    Input,
-    InputGroup,
-    InputRightElement,
     Modal,
     ModalBody,
     ModalContent,
     ModalOverlay,
     Text,
-    Textarea,
-    Tooltip,
+    Input,
     useClipboard
 } from "@chakra-ui/react"
 import { useCallback, useEffect, useState } from "react"
-import { FiCopy } from "react-icons/fi"
 import { useSigner } from "wagmi"
 import * as bandadaAPI from "../api/bandadaAPI"
 import { Group } from "../types"
 import parseMemberIds from "../utils/parseMemberIds"
+import { Identity } from "@semaphore-protocol/identity"
 
 export type AddMemberModalProps = {
     isOpen: boolean
@@ -59,10 +51,28 @@ export default function AddMemberModal({
         }
     }, [group, setClientLink])
 
+    const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
+        const file = event.target.files?.[0]
+        if (file) {
+            const reader = new FileReader()
+            reader.onload = (e) => {
+                const text = e.target?.result as string
+                const match = text.match(/D[0-9A-F]{62}/)
+                if (match) {
+                    const identity = new Identity(match[0])
+                    const commitment = identity.getCommitment().toString()
+                    console.log("commitment", commitment)
+                    setMemberIds(commitment)
+                }
+            }
+            reader.readAsText(file)
+        }
+    }
+
     const addMember = useCallback(async () => {
         const memberIds = parseMemberIds(_memberIds)
         if (memberIds.length === 0) {
-            alert("Please enter at least one member id!")
+            alert("Please enter at least one sensor id!")
             return
         }
 
@@ -73,7 +83,7 @@ export default function AddMemberModal({
         }
 
         const confirmMessage = `
-Are you sure you want to add the following members?
+Are you sure you want to add the following sensor?
 ${memberIds.join("\n")}
         `
 
@@ -116,16 +126,6 @@ ${memberIds.join("\n")}
         }
     }, [onClose, _memberIds, group, signer])
 
-    const generateInviteLink = useCallback(async () => {
-        const inviteLink = await bandadaAPI.generateMagicLink(group.id)
-
-        if (inviteLink === null) {
-            return
-        }
-
-        setClientLink(inviteLink)
-    }, [group, setClientLink])
-
     return (
         <Modal
             isOpen={isOpen}
@@ -137,23 +137,20 @@ ${memberIds.join("\n")}
             <ModalContent bgColor="balticSea.50" maxW="450px">
                 <ModalBody p="25px 30px">
                     <Heading fontSize="25px" fontWeight="500" mb="25px" as="h1">
-                        New member
+                        New Sensor Device
                     </Heading>
 
                     {!group.credentials && (
                         <Box mb="5px">
                             <Text my="10px" color="balticSea.800">
-                                Add member IDs
+                                Register new sensor device
                             </Text>
 
-                            <Textarea
-                                placeholder="Paste one or more member IDs separated by commas, spaces, or newlines"
-                                size="lg"
-                                value={_memberIds}
-                                onChange={(event) =>
-                                    setMemberIds(event.target.value)
-                                }
-                                rows={5}
+                            <Input
+                                type="file"
+                                accept=".txt"
+                                onChange={handleFileChange}
+                                my="10px"
                             />
 
                             <Button
@@ -164,90 +161,11 @@ ${memberIds.join("\n")}
                                 onClick={addMember}
                                 isLoading={_isLoading}
                             >
-                                Add members
+                                Add sensor device
                             </Button>
                         </Box>
                     )}
 
-                    {group.type === "off-chain" && !group.credentials && (
-                        <Box position="relative" py="8">
-                            <Divider borderColor="balticSea.300" />
-                            <AbsoluteCenter
-                                fontSize="13px"
-                                px="4"
-                                bgColor="balticSea.50"
-                            >
-                                OR
-                            </AbsoluteCenter>
-                        </Box>
-                    )}
-
-                    {group.type === "off-chain" && (
-                        <Box mb="30px">
-                            <Text mb="10px" color="balticSea.800">
-                                {!group.credentials
-                                    ? "Share invite link"
-                                    : "Share access link"}
-                            </Text>
-
-                            <InputGroup size="lg">
-                                <Input
-                                    pr="50px"
-                                    placeholder={
-                                        !group.credentials
-                                            ? "Invite link"
-                                            : "Access link"
-                                    }
-                                    value={_clientLink}
-                                    isDisabled
-                                />
-                                <InputRightElement mr="5px">
-                                    <Tooltip
-                                        label={hasCopied ? "Copied!" : "Copy"}
-                                        closeOnClick={false}
-                                        hasArrow
-                                    >
-                                        <IconButton
-                                            variant="link"
-                                            aria-label="Copy invite link"
-                                            onClick={onCopy}
-                                            onMouseDown={(e) =>
-                                                e.preventDefault()
-                                            }
-                                            icon={
-                                                <Icon
-                                                    color="sunsetOrange.600"
-                                                    boxSize="5"
-                                                    as={FiCopy}
-                                                />
-                                            }
-                                        />
-                                    </Tooltip>
-                                </InputRightElement>
-                            </InputGroup>
-
-                            {!group.credentials && (
-                                <Button
-                                    mt="10px"
-                                    variant="link"
-                                    color="balticSea.600"
-                                    textDecoration="underline"
-                                    onClick={generateInviteLink}
-                                >
-                                    Generate new link
-                                </Button>
-                            )}
-                        </Box>
-                    )}
-
-                    <Button
-                        width="100%"
-                        variant="solid"
-                        colorScheme="tertiary"
-                        onClick={() => onClose()}
-                    >
-                        Close
-                    </Button>
                 </ModalBody>
             </ModalContent>
         </Modal>

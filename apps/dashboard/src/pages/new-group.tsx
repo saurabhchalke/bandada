@@ -8,7 +8,7 @@ import GroupSizeStep from "../components/new-group-stepper/group-size-step"
 import StepperNav from "../components/new-group-stepper/stepper-nav"
 import StepperPreview from "../components/new-group-stepper/stepper-preview"
 
-const steps = ["General info", "Group size", "Access mode", "Summary"]
+const steps = ["General info", "Network size", "Access mode", "Summary"]
 
 export default function NewGroupPage(): JSX.Element {
     const [_currentStep, setCurrentStep] = useState<number>(0)
@@ -33,7 +33,7 @@ export default function NewGroupPage(): JSX.Element {
             <VStack spacing="9" flex="1">
                 <HStack justifyContent="space-between" width="100%">
                     <Heading fontSize="40px" as="h1">
-                        Nueva bandada
+                        Zensor Network
                     </Heading>
                 </HStack>
 

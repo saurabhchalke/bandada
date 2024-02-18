@@ -243,7 +243,7 @@ ${memberIds.join("\n")}
                         />
 
                         <Text fontSize="sm" textTransform="uppercase">
-                            all groups
+                            all networks
                         </Text>
                     </HStack>
                 </Link>
@@ -271,7 +271,7 @@ ${memberIds.join("\n")}
                             borderRadius="8px"
                         >
                             <Text fontSize="13px" color="balticSea.500">
-                                MEMBERS
+                                Sensors
                             </Text>
 
                             <Heading fontSize="31px">
@@ -313,7 +313,7 @@ ${memberIds.join("\n")}
                         p="25px 30px 25px 30px"
                         borderRadius="8px"
                     >
-                        <Text fontSize="20px">Group ID</Text>
+                        <Text fontSize="20px">Network ID</Text>
 
                         <InputGroup size="lg" mt="10px">
                             <Input
@@ -438,7 +438,7 @@ ${memberIds.join("\n")}
                             </Text>
 
                             <Text my="10px" fontWeight="400">
-                                To remove this group, type its name below.
+                                To remove this network, type its name below.
                             </Text>
 
                             <HStack spacing="4">
@@ -476,7 +476,7 @@ ${memberIds.join("\n")}
                 >
                     <HStack justify="space-between">
                         <Heading fontSize="25px" as="h1">
-                            Members
+                            Sensor Devices
                         </Heading>
                         <Button
                             variant="solid"
@@ -490,7 +490,7 @@ ${memberIds.join("\n")}
                                       admin.address.toLowerCase())
                             }
                         >
-                            Add member
+                            Add sensor device
                         </Button>
                     </HStack>
 
@@ -526,7 +526,7 @@ ${memberIds.join("\n")}
                     </HStack>
 
                     {!_group.members?.length ? (
-                        <Text mt="5">No members in the group yet.</Text>
+                        <Text mt="5">No sensors in the group yet.</Text>
                     ) : (
                         _group.members?.filter(filterMember).map((memberId) => (
                             <Flex
@@ -624,7 +624,7 @@ ${memberIds.join("\n")}
                                 onClick={() => removeMembers(_selectedMembers)}
                                 size="sm"
                             >
-                                Remove Selected Members
+                                Remove Selected Sensors
                             </Button>
                         </Flex>
                     )}

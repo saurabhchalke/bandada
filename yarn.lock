@@ -5135,6 +5135,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@semaphore-protocol/identity@npm:^3.11.0":
+  version: 3.15.2
+  resolution: "@semaphore-protocol/identity@npm:3.15.2"
+  dependencies:
+    "@ethersproject/bignumber": ^5.5.0
+    "@ethersproject/keccak256": ^5.7.0
+    "@ethersproject/random": ^5.5.1
+    "@ethersproject/strings": ^5.6.1
+    js-sha512: ^0.8.0
+  checksum: b523e93e2779a4c012e4b1ead50ba4a062bf4171c24369e32e87f1364405b9157bbdef091b51e748206cc16b7c8a777cb01f97bd22ba6ff37ca065e6cb714ee0
+  languageName: node
+  linkType: hard
+
 "@semaphore-protocol/proof@npm:3.9.0":
   version: 3.9.0
   resolution: "@semaphore-protocol/proof@npm:3.9.0"
@@ -9873,6 +9886,7 @@ __metadata:
     "@fontsource-variable/unbounded": ^5.0.5
     "@rainbow-me/rainbowkit": ^0.12.8
     "@semaphore-protocol/data": 3.10.0
+    "@semaphore-protocol/identity": ^3.11.0
     "@types/react": ^18.0.27
     "@types/react-dom": ^18.0.10
     "@vitejs/plugin-react": ^3.1.0

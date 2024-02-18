@@ -87,7 +87,7 @@ export default function FinalPreviewStep({
                     color="balticSea.50"
                     pb="16px"
                 >
-                    Group preview
+                    Network preview
                 </Heading>
 
                 <Box zIndex="1">
